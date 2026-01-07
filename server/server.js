@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { testConnection } from './config/db.js';
 import courtRoutes from './routes/courtRoutes.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
