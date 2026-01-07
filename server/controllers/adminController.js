@@ -58,7 +58,7 @@ export const createCourt = async (req, res) => {
 };
 
 // Get a single court by ID
-export const readCourt = async (req, res) => {
+export const getCourtById = async (req, res) => {
   try {
     const { id } = req.params;
     const [courts] = await db.query('SELECT * FROM courts WHERE id = ?', [id]);
@@ -222,5 +222,24 @@ export const approveSubmission = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   } finally {
     if (connection) connection.release();
+  }
+};
+
+// Decline a submission (Hard Delete)
+export const declineSubmission = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Hard delete: completely remove the record
+    const [result] = await db.query('DELETE FROM court_submissions WHERE id = ?', [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Submission not found' });
+    }
+
+    res.json({ success: true, message: 'Submission declined and removed' });
+  } catch (error) {
+    console.error('Error declining submission:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 };

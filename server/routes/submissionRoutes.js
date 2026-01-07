@@ -3,7 +3,6 @@ import { submitCourt } from '../controllers/submissionController.js';
 
 const router = express.Router();
 
-// Court submission routes
 router.post('/submissions', submitCourt);
 
 export default router;

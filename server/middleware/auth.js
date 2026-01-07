@@ -1,5 +1,9 @@
 import jwt from 'jsonwebtoken';
 
+/*
+TODO: RATE LIMITING MIDDLEWARE
+*/
+
 // Authentication middleware to protect routes
 const auth = (req, res, next) => {
     try {
