@@ -20,9 +20,21 @@ const promisePool = pool.promise();
 // Test database connection
 export const testConnection = async () => {
   try {
-    const connection = await promisePool.getConnection();
+    const [rows] = await promisePool.query('SELECT DATABASE() AS db');
+    const currentDb = rows[0]?.db || null;
+    const expectedDb = process.env.DB_NAME || 'pickleguidecebu';
+
+    if (!currentDb) {
+      console.error(`Connected to MySQL server but no default database selected (expected "${expectedDb}").`);
+      return;
+    }
+
+    if (currentDb !== expectedDb) {
+      console.error(`Connected to MySQL server but default database is "${currentDb}", expected "${expectedDb}".`);
+      return;
+    }
+
     console.log('MySQL Database connected successfully');
-    connection.release();
   } catch (error) {
     console.error('Database connection failed:', error.message);
   }
