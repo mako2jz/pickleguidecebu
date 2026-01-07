@@ -11,10 +11,16 @@
     "install-all": "npm run install-server && npm run install-client",
     "build": "cd client && npm run build"
   },
-  "keywords": ["mern", "mysql", "pickleball", "cebu"],
+  "keywords": [
+    "mern",
+    "mysql",
+    "pickleball",
+    "cebu"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "prettier": "3.7.4"
   }
 }
