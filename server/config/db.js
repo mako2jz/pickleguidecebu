@@ -21,10 +21,10 @@ const promisePool = pool.promise();
 export const testConnection = async () => {
   try {
     const connection = await promisePool.getConnection();
-    console.log('✓ MySQL Database connected successfully');
+    console.log('MySQL Database connected successfully');
     connection.release();
   } catch (error) {
-    console.error('✗ Database connection failed:', error.message);
+    console.error('Database connection failed:', error.message);
   }
 };
 

@@ -55,7 +55,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>&copy; 2024 Pickle Guide Cebu. All rights reserved.</p>
+        <p>&copy; 2026 Pickle Guide Cebu. All rights reserved.</p>
       </footer>
     </div>
   )
