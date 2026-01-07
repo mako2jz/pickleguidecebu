@@ -1,9 +1,10 @@
 import db from '../config/db.js';
 
-// Example controller for courts
+// Get all courts
 export const getAllCourts = async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM courts');
+    // Ordered by venue_name for a better list
+    const [rows] = await db.query('SELECT * FROM courts ORDER BY venue_name ASC');
     res.json({ success: true, data: rows });
   } catch (error) {
     console.error('Error fetching courts:', error);
@@ -11,6 +12,7 @@ export const getAllCourts = async (req, res) => {
   }
 };
 
+// Get single court by ID
 export const getCourtById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -27,13 +29,51 @@ export const getCourtById = async (req, res) => {
   }
 };
 
+// Create a new court
 export const createCourt = async (req, res) => {
   try {
-    const { name, location, description, price } = req.body;
-    const [result] = await db.query(
-      'INSERT INTO courts (name, location, description, price) VALUES (?, ?, ?, ?)',
-      [name, location, description, price]
-    );
+    const { 
+      venue_picture,
+      venue_name, 
+      location, 
+      number_of_courts, 
+      price,
+      facebook_page,
+      instagram,
+      viber,
+      telephone_number,
+      mobile_number
+    } = req.body;
+
+    // Validate request against NOT NULL schema constraints
+    if (!venue_picture || !venue_name || !location || !number_of_courts) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Missing required fields: venue_picture, venue_name, location, or number_of_courts' 
+      });
+    }
+
+    const query = `
+      INSERT INTO courts (
+        venue_picture, venue_name, location, number_of_courts, price, 
+        facebook_page, instagram, viber, telephone_number, mobile_number
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const values = [
+      venue_picture,
+      venue_name, 
+      location, 
+      number_of_courts, 
+      price || null,
+      facebook_page || null,
+      instagram || null,
+      viber || null,
+      telephone_number || null,
+      mobile_number || null
+    ];
+
+    const [result] = await db.query(query, values);
     
     res.status(201).json({ 
       success: true, 
@@ -42,6 +82,61 @@ export const createCourt = async (req, res) => {
     });
   } catch (error) {
     console.error('Error creating court:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+// Submit a new court (pending approval)
+export const submitCourt = async (req, res) => {
+  try {
+    const { 
+      venue_name, 
+      location, 
+      number_of_courts, 
+      price,
+      facebook_page,
+      instagram,
+      viber,
+      telephone_number,
+      mobile_number
+    } = req.body;
+
+    // Validate request based on court_submissions schema
+    if (!venue_name || !location || !number_of_courts) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Missing required fields: venue_name, location, or number_of_courts' 
+      });
+    }
+
+    const query = `
+      INSERT INTO court_submissions (
+        venue_name, location, number_of_courts, price, 
+        facebook_page, instagram, viber, telephone_number, mobile_number, status
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+    `;
+
+    const values = [
+      venue_name, 
+      location, 
+      number_of_courts, 
+      price || null,
+      facebook_page || null,
+      instagram || null,
+      viber || null,
+      telephone_number || null,
+      mobile_number || null
+    ];
+
+    const [result] = await db.query(query, values);
+    
+    res.status(201).json({ 
+      success: true, 
+      message: 'Court submission received successfully. Pending admin approval.',
+      data: { id: result.insertId }
+    });
+  } catch (error) {
+    console.error('Error submitting court:', error);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
