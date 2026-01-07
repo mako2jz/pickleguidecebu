@@ -61,3 +61,35 @@ CREATE TABLE admins (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+-- User-submitted courts (pending admin review)
+CREATE TABLE court_submissions (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    venue_name VARCHAR(150) NOT NULL,
+    location TEXT NOT NULL,
+    number_of_courts INT UNSIGNED NOT NULL,
+
+    price TEXT,
+
+    facebook_page VARCHAR(255),
+    instagram VARCHAR(255),
+    viber VARCHAR(50),
+
+    telephone_number VARCHAR(50),
+    mobile_number VARCHAR(50),
+
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+
+    reviewed_by INT UNSIGNED NULL,
+    reviewed_at TIMESTAMP NULL,
+
+    admin_notes TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_submission_admin
+        FOREIGN KEY (reviewed_by)
+        REFERENCES admins(id)
+        ON DELETE SET NULL
+);

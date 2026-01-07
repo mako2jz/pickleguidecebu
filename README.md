@@ -1,6 +1,6 @@
 # Pickle Guide Cebu 🏓
 
-A central guide to pickleball court rentals in Cebu.
+A community-driven guide to pickleball court rentals in Cebu.
 
 ## Tech Stack
 
@@ -159,7 +159,6 @@ npm run build
 - 📍 View court locations and details
 - 💰 Compare prices
 - ⭐ Court ratings and reviews (coming soon)
-- 📅 Real-time availability (coming soon)
 
 ## Contributing
 
