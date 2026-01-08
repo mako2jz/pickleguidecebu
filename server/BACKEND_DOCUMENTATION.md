@@ -1,92 +1,279 @@
 # Pickle Guide Cebu - Backend Documentation
 
 ## Overview
-This is the backend API for Pickle Guide Cebu, built with Node.js, Express, and MySQL. It handles data persistence for venues, user reviews, admin management, and public court submissions.
+Backend API for Pickle Guide Cebu built with Node.js, Express, and MySQL. Handles venue data, user reviews, admin management, and public court submissions.
 
 ## Tech Stack
 - **Runtime:** Node.js
 - **Framework:** Express.js
 - **Database:** MySQL (using `mysql2` driver)
-- **Authentication:** JWT (JSON Web Tokens) in HttpOnly Cookies
-- **Environment Management:** `dotenv`
+- **Authentication:** JWT in HttpOnly Cookies
+- **Security:** `bcryptjs`, `express-rate-limit`
+- **Environment:** `dotenv`
 
 ## Project Structure
 ```
 server/
-├── config/         # Database configuration
-├── controllers/    # Request logic
-├── database/       # SQL schemas
-├── middleware/     # Auth & validation
-├── routes/         # API endpoints
-└── server.js       # Entry point
+├── config/
+│   └── db.js              # MySQL connection pool
+├── controllers/
+│   ├── adminController.js # Admin CRUD + submission management
+│   ├── authController.js  # Login/logout/session
+│   ├── courtController.js # Public court queries
+│   ├── reviewController.js# Review CRUD
+│   └── submissionController.js # Public submissions
+├── database/
+│   └── schema.sql         # Database schema
+├── middleware/
+│   ├── auth.js            # JWT verification
+│   ├── rateLimit.js       # Rate limiting configs
+│   └── role.js            # Role-based access control
+├── routes/
+│   ├── adminRoutes.js     # /api/admin/*
+│   ├── authRoutes.js      # /api/auth/*
+│   ├── courtRoutes.js     # /api/courts/*
+│   ├── reviewRoutes.js    # /api/reviews/*
+│   └── submissionRoutes.js# /api/submissions
+└── server.js              # Entry point
 ```
-
-## Current Features
-
-### 1. Database Schema
-- **Courts**: Stores venue details (name, location, price, contact, etc.).
-- **Reviews**: Stores user ratings and comments for venues.
-- **Admins**: Stores admin credentials and roles (`admin`, `super_admin`).
-- **Court Submissions**: Stores user-suggested venues pending approval.
-
-### 2. Authentication & Authorization
-- **JWT Middleware (`auth.js`)**: Verifies identity via HttpOnly cookies.
-- **Role Middleware (`role.js`)**: Enforces permissions (`adminOnly`, `superAdminOnly`, `allowRoles`).
-
-### 3. API Endpoints
-
-#### Public Routes (`/api`)
-| Method | Endpoint | Description | Status |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/health` | Health check | Implemented |
-| `GET` | `/courts` | Get all approved courts | Implemented |
-| `GET` | `/courts/:id` | Get single court details | Implemented |
-| `POST` | `/submissions` | User submits a new court | Implemented |
-
-#### Admin Routes (`/api/admin` - *To be mounted*)
-*(Protected by Auth + Role Middleware)*
-
-| Method | Endpoint | Description | Status |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/courts` | Create a new court directly | Controller Ready |
-| `GET` | `/courts/:id` | Get court for editing | Controller Ready |
-| `PUT` | `/courts/:id` | Update court details | Controller Ready |
-| `DELETE` | `/courts/:id` | Delete a court | Controller Ready |
-| `POST` | `/submissions/:id/approve` | Approve user submission | Controller Ready |
-
-## Configuration
-- **.env**: Requires `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `JWT_SECRET`, `PORT`.
 
 ---
 
-# Backend Implementation Todo List
+## API Endpoints
 
-## 1. Core Server & Configuration
-- [ ] **Fix**: Add `cookie-parser` to `server.js` (Required for `auth.js` to read cookies).
-- [ ] **Fix**: Register `adminRoutes` in `server.js` under `/api/admin`.
-- [ ] **Fix**: Register `submissionRoutes` in `server.js` under `/api`.
+### Public Routes
 
-## 2. Admin Authentication (Login)
-- [ ] **Make**: Create `authController.js` to handle admin login.
-    - Validate credentials (hash check).
-    - Generate JWT.
-    - Send HttpOnly cookie.
-- [ ] **Make**: Create `authRoutes.js` for `/api/auth/login` and `/api/auth/logout`.
-- [ ] **Make**: Script or detailed instruction to seed the first `super_admin` in the database (since we can't register admins via public API).
+| Method | Endpoint | Description | Rate Limit |
+|:-------|:---------|:------------|:-----------|
+| `GET` | `/api/health` | Health check | General |
+| `GET` | `/api/courts` | Get all courts | General |
+| `GET` | `/api/courts/:id` | Get single court | General |
+| `POST` | `/api/submissions` | Submit new court | 3/hour |
+| `POST` | `/api/reviews` | Create review | 10/hour |
+| `GET` | `/api/venues/:venueId/reviews` | Get venue reviews | General |
+| `GET` | `/api/reviews/:id` | Get single review | General |
 
-## 3. Review System
-- [ ] **Make**: Implement `reviewController.js`.
-    - `createReview`: Add review to a venue.
-    - `getReviewsByVenue`: List reviews for a specific court.
-    - `deleteReview`: (Admin only) Moderation.
-- [ ] **Make**: Implement `reviewRoutes.js` and register in `server.js`.
+### Auth Routes
 
-## 4. Submission Management
-- [ ] **Make**: Add `getPendingSubmissions` to `adminController.js` (Admins need to see what to approve).
-- [ ] **Make**: Add route for `getPendingSubmissions` in `adminRoutes.js`.
-- [ ] **Make**: Add `rejectSubmission` to `adminController.js` (To clean up spam/invalid entries).
+| Method | Endpoint | Description | Rate Limit |
+|:-------|:---------|:------------|:-----------|
+| `POST` | `/api/auth/login` | Admin login | 5 attempts/15min |
+| `POST` | `/api/auth/logout` | Admin logout | General |
+| `GET` | `/api/auth/me` | Check session | General |
 
-## 5. File Uploads (Venue Pictures)
-- [ ] **Feature**: Currently, we accept string paths for `venue_picture`. We need actual file handling using `multer`.
-    - Configure `multer` storage.
-    - Update `createCourt` and `updateCourt` to handle file uploads.
+### Admin Routes (Protected)
+
+| Method | Endpoint | Description |
+|:-------|:---------|:------------|
+| `GET` | `/api/admin/courts` | List all courts |
+| `POST` | `/api/admin/courts` | Create court |
+| `GET` | `/api/admin/courts/:id` | Get court |
+| `PUT` | `/api/admin/courts/:id` | Update court |
+| `DELETE` | `/api/admin/courts/:id` | Delete court |
+| `GET` | `/api/admin/submissions` | Get pending submissions |
+| `POST` | `/api/admin/submissions/:id/approve` | Approve submission |
+| `DELETE` | `/api/admin/submissions/:id/decline` | Decline submission |
+| `DELETE` | `/api/reviews/:id` | Delete review (moderation) |
+
+---
+
+## Configuration
+
+### Required `.env` Variables
+```env
+# Database
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=pickleguidecebu
+
+# Server
+PORT=5000
+
+# Security
+JWT_SECRET=your_super_secret_key_here
+
+# CORS (Frontend URL)
+CORS_ORIGIN=http://localhost:3000
+
+# Environment
+NODE_ENV=development
+```
+
+### Database Setup
+1. Start MySQL (via XAMPP or standalone)
+2. Run the schema:
+   ```sql
+   source server/database/schema.sql
+   ```
+3. Seed your first super_admin:
+   ```sql
+   INSERT INTO admins (username, email, password_hash, role) 
+   VALUES ('admin', 'admin@pickleguide.com', '$2a$10$YOUR_BCRYPT_HASH', 'super_admin');
+   ```
+   
+   Generate hash with: `npx bcryptjs-cli hash "your_password" 10`
+
+---
+
+## Frontend Connection Guide
+
+### 1. Install Axios (or use fetch)
+```bash
+cd client
+npm install axios
+```
+
+### 2. Create API Service (`client/src/services/api.js`)
+```javascript
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  withCredentials: true, // REQUIRED for cookies
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+export default api;
+```
+
+### 3. Example Usage
+
+**Fetch all courts:**
+```javascript
+import api from './services/api';
+
+const getCourts = async () => {
+  const response = await api.get('/courts');
+  return response.data.data; // Array of courts
+};
+```
+
+**Admin login:**
+```javascript
+const login = async (username, password) => {
+  const response = await api.post('/auth/login', { username, password });
+  return response.data; // { success, message, user }
+};
+```
+
+**Check if logged in:**
+```javascript
+const checkAuth = async () => {
+  try {
+    const response = await api.get('/auth/me');
+    return response.data.user; // { id, role }
+  } catch {
+    return null; // Not logged in
+  }
+};
+```
+
+**Submit a review:**
+```javascript
+const submitReview = async (venueId, rating, name, description) => {
+  const response = await api.post('/reviews', {
+    venue_id: venueId,
+    rating,
+    reviewer_name: name,
+    review_description: description
+  });
+  return response.data;
+};
+```
+
+**Admin: Approve submission:**
+```javascript
+const approveSubmission = async (submissionId) => {
+  const response = await api.post(`/admin/submissions/${submissionId}/approve`);
+  return response.data;
+};
+```
+
+### 4. Auth Context Example (`client/src/context/AuthContext.jsx`)
+```javascript
+import { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    try {
+      const response = await api.get('/auth/me');
+      setUser(response.data.user);
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const login = async (username, password) => {
+    const response = await api.post('/auth/login', { username, password });
+    setUser(response.data.user);
+    return response.data;
+  };
+
+  const logout = async () => {
+    await api.post('/auth/logout');
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
+```
+
+### 5. Protected Route Example
+```javascript
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
+const ProtectedRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <Navigate to="/login" />;
+  
+  return children;
+};
+```
+
+---
+
+## Security Features
+
+| Feature | Implementation |
+|:--------|:---------------|
+| Password Hashing | bcryptjs (10 rounds) |
+| JWT Storage | HttpOnly cookies |
+| CORS | Credentials + specific origin |
+| Rate Limiting | Per-route limits |
+| SQL Injection | Parameterized queries |
+| Role-Based Access | `adminOnly`, `superAdminOnly` middleware |
+
+---
+
+## Running the Server
+
+```bash
+cd server
+npm install
+npm run dev    # Development (nodemon)
+npm start      # Production
+```

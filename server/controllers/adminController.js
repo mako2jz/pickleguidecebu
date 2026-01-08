@@ -243,3 +243,16 @@ export const declineSubmission = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
+// Get all pending submissions (for admin review queue)
+export const getPendingSubmissions = async (req, res) => {
+  try {
+    const [submissions] = await db.query(
+      'SELECT * FROM court_submissions WHERE status = "pending" ORDER BY created_at ASC'
+    );
+    res.json({ success: true, data: submissions });
+  } catch (error) {
+    console.error('Error fetching submissions:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
