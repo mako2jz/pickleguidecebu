@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
-import './global.css';
+import './index.css';
 
 function App() {
   return (
