@@ -1,7 +1,3 @@
-/*
-TODO: RATE LIMITING MIDDLEWARE
-*/
-
 // Role-based access control middleware
 const allowRoles = (...allowedRoles) => {
     return (req, res, next) => {

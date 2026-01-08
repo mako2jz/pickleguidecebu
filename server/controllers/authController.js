@@ -7,7 +7,7 @@ export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // 1. Check if user exists
+    // Check if user exists
     const [users] = await db.query('SELECT * FROM admins WHERE username = ?', [username]);
     
     if (users.length === 0) {
@@ -16,21 +16,21 @@ export const login = async (req, res) => {
 
     const admin = users[0];
 
-    // 2. Compare password
+    // Compare password
     const isMatch = await bcrypt.compare(password, admin.password);
 
     if (!isMatch) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
-    // 3. Create JWT Token
+    // Create JWT Token
     const token = jwt.sign(
       { userId: admin.id, role: admin.role },
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
 
-    // 4. Send Token via HttpOnly Cookie
+    // Send Token via HttpOnly Cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Use secure in production
