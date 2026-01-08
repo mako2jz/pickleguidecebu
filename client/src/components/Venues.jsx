@@ -67,35 +67,37 @@ const Venues = () => {
     }
 
     return (
-        <section className="venues-section">
-            <div className="venues-header">
-                <h2>Available Venues</h2>
-                <p>Browse through {venues.length} pickleball venues in Cebu</p>
-            </div>
-
-            <div className="venues-grid">
-                {venues.map((venue) => (
-                    <VenueCard 
-                        key={venue.id} 
-                        venue={venue} 
-                        onClick={handleVenueClick}
-                    />
-                ))}
-            </div>
-
-            {venues.length === 0 && (
-                <div className="venues-empty">
-                    <p>No venues available yet. Check back soon!</p>
+        <section className="py-8 px-4">
+            <div className="container mx-auto">
+                <div className="mb-6">
+                    <h2 className="text-2xl font-semibold text-foreground">Available Venues</h2>
+                    <p className="text-foreground/70">Browse through {venues.length} pickleball venues in Cebu</p>
                 </div>
-            )}
 
-            {/* Venue Detail Modal */}
-            {selectedVenue && (
-                <VenueModal 
-                    venue={selectedVenue} 
-                    onClose={handleCloseModal}
-                />
-            )}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {venues.map((venue) => (
+                        <VenueCard 
+                            key={venue.id} 
+                            venue={venue} 
+                            onClick={handleVenueClick}
+                        />
+                    ))}
+                </div>
+
+                {venues.length === 0 && (
+                    <div className="text-center py-12 text-foreground/60">
+                        <p>No venues available yet. Check back soon!</p>
+                    </div>
+                )}
+
+                {/* Venue Detail Modal */}
+                {selectedVenue && (
+                    <VenueModal 
+                        venue={selectedVenue} 
+                        onClose={handleCloseModal}
+                    />
+                )}
+            </div>
         </section>
     );
 };

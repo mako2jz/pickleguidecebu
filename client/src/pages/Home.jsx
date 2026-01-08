@@ -30,33 +30,6 @@ const Home = () => {
                     </div>
                 </section>
 
-                {/* Features Section */}
-                <section className="features-section">
-                    <h2>Why Choose Pickle Guide Cebu?</h2>
-                    <div className="features-grid">
-                        <div className="feature-card">
-                            <div className="feature-icon">📍</div>
-                            <h4>Easy Location</h4>
-                            <p>Find courts near you with detailed location information</p>
-                        </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">💰</div>
-                            <h4>Best Prices</h4>
-                            <p>Compare prices and find the best deals for your budget</p>
-                        </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">⭐</div>
-                            <h4>Quality Courts</h4>
-                            <p>Browse verified courts with ratings and reviews</p>
-                        </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">🏆</div>
-                            <h4>Community Driven</h4>
-                            <p>Submit venues and help grow the Cebu pickleball community</p>
-                        </div>
-                    </div>
-                </section>
-
                 {/* Venues Section */}
                 <div id="venues">
                     <Venues />
