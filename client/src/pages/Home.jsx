@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Venues from '../components/Venues';
 import VenueSubmission from '../components/VenueSubmission';
+import logo from '../resources/pickleheaderlogo.svg';
 
 const Home = () => {
     const [showSubmissionModal, setShowSubmissionModal] = useState(false);
@@ -14,10 +15,14 @@ const Home = () => {
             <main className="main-content">
                 {/* Hero Section */}
                 <section className="hero-section">
-                    <h1>🏓 Pickle Guide Cebu</h1>
+                    <img 
+                        src={logo} 
+                        alt="Pickleball Courts in Cebu"
+                        className="h-40 w-full"
+                    ></img>
                     <p className="hero-description">
-                        Your Central Guide to Pickleball Court Rentals in Cebu.
-                        Discover the best pickleball courts, compare prices, and find your next game location.
+                        Welcome to Pickle Guide Cebu! Your central hub for discovering and booking pickleball courts across Cebu. 
+                        Whether you're a seasoned player or just starting out, we've got the perfect venue for you.
                     </p>
                     <div className="cta-buttons">
                         <a href="#venues" className="btn btn-primary">Find Courts</a>
