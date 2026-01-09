@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { Search, Plus } from 'lucide-react';
 import logo from '../resources/pickleheaderlogo.svg';
 
 const Hero = ({ onSubmitVenue }) => {
@@ -15,9 +16,15 @@ const Hero = ({ onSubmitVenue }) => {
             </p>
             <div className="cta-buttons">
                 <Button asChild variant="outline">
-                    <a href="#venues">Find Courts</a>
+                    <a href="#venues">
+                        <Search />
+                        Find Courts
+                    </a>
                 </Button>
-                <Button onClick={onSubmitVenue} variant="outline">Submit a Venue</Button>
+                <Button onClick={onSubmitVenue} variant="outline">
+                    <Plus />
+                    Submit a Venue
+                </Button>
             </div>
         </section>
     );
