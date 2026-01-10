@@ -232,7 +232,7 @@ const VenueModal = ({ venue, onClose }) => {
                                             href={venue.instagram.startsWith('http') ? venue.instagram : `https://instagram.com/${venue.instagram.replace("@", "")}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white rounded-md hover:opacity-90 transition-opacity"
+                                            className="flex items-center gap-2 px-3 py-2 bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white rounded-md hover:opacity-90 transition-opacity"
                                         >
                                             <Instagram className="w-4 h-4" />
                                             <span className="text-sm">Instagram</span>
