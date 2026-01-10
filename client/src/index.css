@@ -245,6 +245,10 @@ body {
   margin-top: auto;
 }
 
+#faq {
+  color: #5C6657;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-content h1 {

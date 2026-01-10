@@ -15,13 +15,13 @@ const Hero = ({ onSubmitVenue }) => {
                 Whether you're a seasoned player or just starting out, we've got the perfect venue for you.
             </p>
             <div className="cta-buttons">
-                <Button asChild variant="outline">
+                <Button asChild variant="pickleballgreen">
                     <a href="#venues">
                         <Search />
                         Find Courts
                     </a>
                 </Button>
-                <Button onClick={onSubmitVenue} variant="outline">
+                <Button onClick={onSubmitVenue} variant="pickleballgreen">
                     <Plus />
                     Submit a Venue
                 </Button>

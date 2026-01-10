@@ -13,36 +13,6 @@ const Questions = () => {
             <p className="text-foreground/70">New to Pickleball in Cebu? Find answers to common questions here.</p>
         </div>
         <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-                <AccordionTrigger>What is pickleball?</AccordionTrigger>
-                <AccordionContent>
-                    Pickleball is a paddle sport that combines elements of tennis, 
-                    badminton, and table tennis. It’s played on a smaller court using a 
-                    solid paddle and a perforated plastic ball. The game is easy to learn, 
-                    fun for all ages, and very popular for social and competitive play.
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-                <AccordionTrigger>What equipment do I need?</AccordionTrigger>
-                <AccordionContent>
-                    At minimum, you’ll need: 
-                    <ul className="list-disc pl-4 pt-2 pb-4">
-                        <li>A pickleball paddle</li>
-                        <li>Pickleball balls</li>
-                        <li>Comfortable athletic clothing</li>
-                        <li>Non-marking court shoes</li>
-                    </ul>
-                    Some venues or open play sessions may provide paddles and balls for beginners.
-                </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-                <AccordionTrigger>What is open play?</AccordionTrigger>
-                <AccordionContent>
-                    Open play is a casual playing format where players rotate in and out of games. 
-                    You don’t need a fixed partner, and matches are usually short. It’s the best 
-                    way to meet other players and get more court time.
-                </AccordionContent>
-            </AccordionItem>
             <AccordionItem value="item-4">
                 <AccordionTrigger>What is Reclub?</AccordionTrigger>
                 <AccordionContent>
@@ -91,6 +61,14 @@ const Questions = () => {
                     to help match players of similar skill levels during open play sessions.
                 </AccordionContent>
             </AccordionItem>
+            <AccordionItem value="item-3">
+                <AccordionTrigger>What is open play?</AccordionTrigger>
+                <AccordionContent>
+                    Open play is a casual playing format where players rotate in and out of games. 
+                    You don’t need a fixed partner, and matches are usually short. It’s the best 
+                    way to meet other players and get more court time.
+                </AccordionContent>
+            </AccordionItem>
             <AccordionItem value="item-8">
                 <AccordionTrigger>What is paddle stacking?</AccordionTrigger>
                 <AccordionContent>
@@ -98,6 +76,28 @@ const Questions = () => {
                     in a designated area, usually on the court sidelines, when they are not in use. 
                     This helps keep the playing area organized and prevents paddles from being misplaced 
                     or damaged during games.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+                <AccordionTrigger>What equipment do I need?</AccordionTrigger>
+                <AccordionContent>
+                    At minimum, you’ll need: 
+                    <ul className="list-disc pl-4 pt-2 pb-4">
+                        <li>A pickleball paddle</li>
+                        <li>Pickleball balls</li>
+                        <li>Comfortable athletic clothing</li>
+                        <li>Non-marking court shoes</li>
+                    </ul>
+                    Some venues or open play sessions may provide paddles and balls for beginners.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-1">
+                <AccordionTrigger>What is pickleball?</AccordionTrigger>
+                <AccordionContent>
+                    Pickleball is a paddle sport that combines elements of tennis, 
+                    badminton, and table tennis. It’s played on a smaller court using a 
+                    solid paddle and a perforated plastic ball. The game is easy to learn, 
+                    fun for all ages, and very popular for social and competitive play.
                 </AccordionContent>
             </AccordionItem>
         </Accordion>

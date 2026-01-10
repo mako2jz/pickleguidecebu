@@ -23,7 +23,7 @@ const Home = () => {
                 </div>
 
                 {/* FAQ Section */}
-                <div id="faq-questions">
+                <div id="faq">
                     <Questions />
                 </div>
             </main>

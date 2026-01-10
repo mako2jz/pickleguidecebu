@@ -13,7 +13,7 @@ const Footer = () => {
                     <div className="flex flex-col text-[#5C6657]">
                         <a href="#venues" className="font-medium hover:underline">Find Venues</a>
                         <a href="#venues" className="font-medium hover:underline">Submit a Venue</a>
-                        <a href="#faq-questions" className="font-medium hover:underline">FAQ</a>
+                        <a href="#faq" className="font-medium hover:underline">FAQ</a>
                     </div>
                 </div>
                 

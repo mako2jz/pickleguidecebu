@@ -17,7 +17,7 @@ const VenueCard = ({ venue, onClick }) => {
             </div>
             <CardContent className="p-4">
                 <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-foreground">
+                    <h3 className="text-lg font-semibold text-[#5C6657]">
                         {venue.venue_name}
                     </h3>
                     {venue.averageRating > 0 && (
@@ -29,20 +29,20 @@ const VenueCard = ({ venue, onClick }) => {
                         </div>
                     )}
                 </div>
-                <div className="flex items-start gap-2 text-sm text-foreground/70 mb-3">
+                <div className="flex items-start gap-2 text-sm text-[#5C6657] mb-3">
                     <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     <span>{venue.location}</span>
                 </div>
                 <div className="flex items-center justify-between">
                     <Badge
                         variant="secondary"
-                        className="bg-secondary text-secondary-foreground border-border/50"
+                        className="bg-[#A2AF9B] text-white border-border/50"
                     >
                         {venue.number_of_courts}{" "}
                         {venue.number_of_courts === 1 ? "Court" : "Courts"}
                     </Badge>
                     {venue.price && (
-                        <span className="text-sm font-medium text-primary">
+                        <span className="text-sm font-medium text-[#5C6657]">
                             {venue.price}
                         </span>
                     )}
