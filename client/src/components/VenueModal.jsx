@@ -118,7 +118,7 @@ const VenueModal = ({ venue, onClose }) => {
                     <div className="p-6">
                         <div className="flex items-start justify-between mb-4">
                             <div>
-                                <h2 className="text-3xl font-bold mb-2 text-foreground">
+                                <h2 className="text-3xl font-bold mb-2 text-[#393F36]">
                                     {venue.venue_name}
                                 </h2>
                                 <div className="flex items-center gap-2 text-foreground/70">
@@ -146,17 +146,17 @@ const VenueModal = ({ venue, onClose }) => {
 
                         <div className="grid md:grid-cols-2 gap-6 mb-6">
                             <div className="space-y-4">
-                                <h3 className="font-semibold text-lg text-foreground">
+                                <h3 className="font-semibold text-lg text-[#5C6657]">
                                     Venue Information
                                 </h3>
 
                                 <div className="flex items-center gap-3">
-                                    <Users className="w-5 h-5 text-primary" />
+                                    <Users className="w-5 h-5 text-[#5C6657]" />
                                     <div>
                                         <div className="text-sm text-foreground/60">
                                             Number of Courts
                                         </div>
-                                        <div className="font-medium text-foreground">
+                                        <div className="font-medium text-[#5C6657]">
                                             {venue.number_of_courts}
                                         </div>
                                     </div>
@@ -164,12 +164,12 @@ const VenueModal = ({ venue, onClose }) => {
 
                                 {venue.price && (
                                     <div className="flex items-center gap-3">
-                                        <DollarSign className="w-5 h-5 text-primary" />
+                                        <DollarSign className="w-5 h-5 text-[#5C6657]" />
                                         <div>
                                             <div className="text-sm text-foreground/60">
                                                 Pricing
                                             </div>
-                                            <div className="font-medium text-foreground">
+                                            <div className="font-medium text-[#5C6657]">
                                                 {venue.price}
                                             </div>
                                         </div>
@@ -178,20 +178,20 @@ const VenueModal = ({ venue, onClose }) => {
                             </div>
 
                             <div className="space-y-4">
-                                <h3 className="font-semibold text-lg text-foreground">
+                                <h3 className="font-semibold text-lg text-[#5C6657]">
                                     Contact Information
                                 </h3>
 
                                 {venue.mobile_number && (
                                     <div className="flex items-center gap-3">
-                                        <Smartphone className="w-5 h-5 text-primary" />
+                                        <Smartphone className="w-5 h-5 text-[#5C6657]" />
                                         <div>
                                             <div className="text-sm text-foreground/60">
                                                 Mobile
                                             </div>
                                             <a
                                                 href={`tel:${venue.mobile_number}`}
-                                                className="font-medium text-foreground hover:text-primary"
+                                                className="font-medium text-[#5C6657] hover:text-primary"
                                             >
                                                 {venue.mobile_number}
                                             </a>
@@ -201,14 +201,14 @@ const VenueModal = ({ venue, onClose }) => {
 
                                 {venue.telephone_number && (
                                     <div className="flex items-center gap-3">
-                                        <Phone className="w-5 h-5 text-primary" />
+                                        <Phone className="w-5 h-5 text-[#5C6657]" />
                                         <div>
                                             <div className="text-sm text-foreground/60">
                                                 Telephone
                                             </div>
                                             <a
                                                 href={`tel:${venue.telephone_number}`}
-                                                className="font-medium text-foreground hover:text-primary"
+                                                className="font-medium text-[#5C6657] hover:text-primary"
                                             >
                                                 {venue.telephone_number}
                                             </a>
@@ -218,12 +218,12 @@ const VenueModal = ({ venue, onClose }) => {
 
                                 {venue.viber && (
                                     <div className="flex items-center gap-3">
-                                        <MessageCircle className="w-5 h-5 text-primary" />
+                                        <MessageCircle className="w-5 h-5 text-[#5C6657]" />
                                         <div>
                                             <div className="text-sm text-foreground/60">
                                                 Viber
                                             </div>
-                                            <div className="font-medium text-foreground">
+                                            <div className="font-medium text-[#5C6657]">
                                                 {venue.viber}
                                             </div>
                                         </div>
@@ -278,7 +278,7 @@ const VenueModal = ({ venue, onClose }) => {
                                         {reviews.map((review) => (
                                             <div key={review.id} className="bg-card p-4 rounded-lg border border-border">
                                                 <div className="flex items-center justify-between mb-2">
-                                                    <span className="font-semibold text-foreground">{review.reviewer_name}</span>
+                                                    <span className="font-semibold text-[#5C6657]">{review.reviewer_name}</span>
                                                     <div className="flex items-center gap-1 text-[#D4AF37]">
                                                         {[...Array(review.rating)].map((_, i) => (
                                                             <Star key={i} className="w-4 h-4 fill-current" />
@@ -299,7 +299,7 @@ const VenueModal = ({ venue, onClose }) => {
                                     {error && <p className="text-destructive text-sm">{error}</p>}
                                     
                                     <div>
-                                        <label className="block text-sm font-medium text-foreground mb-1">
+                                        <label className="block text-sm font-medium text-[#5C6657] mb-1">
                                             Your Name
                                         </label>
                                         <input
@@ -308,12 +308,12 @@ const VenueModal = ({ venue, onClose }) => {
                                             value={reviewForm.reviewer_name}
                                             onChange={(e) => setReviewForm({...reviewForm, reviewer_name: e.target.value})}
                                             required
-                                            className="w-full px-3 py-2 border border-border rounded-md bg-input-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                                            className="w-full px-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
                                         />
                                     </div>
                                     
                                     <div>
-                                        <label className="block text-sm font-medium text-foreground mb-1">
+                                        <label className="block text-sm font-medium text-[#5C6657] mb-1">
                                             Rating
                                         </label>
                                         <div className="flex gap-2">
@@ -333,7 +333,7 @@ const VenueModal = ({ venue, onClose }) => {
                                     </div>
                                     
                                     <div>
-                                        <label className="block text-sm font-medium text-foreground mb-1">
+                                        <label className="block text-sm font-medium text-[#5C6657] mb-1">
                                             Your Review
                                         </label>
                                         <textarea
@@ -342,11 +342,11 @@ const VenueModal = ({ venue, onClose }) => {
                                             onChange={(e) => setReviewForm({...reviewForm, review_description: e.target.value})}
                                             required
                                             rows={4}
-                                            className="w-full px-3 py-2 border border-border rounded-md bg-input-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                                            className="w-full px-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring resize-none"
                                         />
                                     </div>
                                     
-                                    <Button type="submit" disabled={submitting} className="w-full">
+                                    <Button type="submit" disabled={submitting} className="w-full" variant="pickleballgreen">
                                         {submitting ? 'Submitting...' : 'Submit Review'}
                                     </Button>
                                 </form>
