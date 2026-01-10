@@ -9,8 +9,8 @@ const Questions = () => {
   return (
     <div className="w-full max-w-2xl mx-auto my-8">
         <div className="mb-6">
-            <h2 className="text-2xl font-semibold text-foreground">Frequently Asked Questions</h2>
-            <p className="text-foreground/70">New to Pickleball in Cebu? Find answers to common questions here.</p>
+            <h2 className="text-2xl font-semibold text-[#393F36]">Frequently Asked Questions</h2>
+            <p className="text-[#5C6657]">New to Pickleball in Cebu? Find answers to common questions here.</p>
         </div>
         <Accordion type="single" collapsible>
             <AccordionItem value="item-4">

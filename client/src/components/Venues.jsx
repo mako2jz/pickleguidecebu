@@ -70,8 +70,8 @@ const Venues = () => {
         <section className="py-8 px-4">
             <div className="container mx-auto">
                 <div className="mb-6">
-                    <h2 className="text-2xl font-semibold text-foreground">Available Venues</h2>
-                    <p className="text-foreground/70">Browse through {venues.length} pickleball venues in Cebu</p>
+                    <h2 className="text-2xl font-semibold text-[#393F36]">Available Venues</h2>
+                    <p className="text-[#5C6657]">Browse through {venues.length} pickleball venues in Cebu</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -97,6 +97,11 @@ const Venues = () => {
                         onClose={handleCloseModal}
                     />
                 )}
+            </div>
+            <div className="mt-4">
+                <p className="text-foreground/70">Don't see a venue you like? Submit one! 
+                    <a href="#hero" className="text-primary hover:underline"> Submit a Venue</a>
+                </p>
             </div>
         </section>
     );

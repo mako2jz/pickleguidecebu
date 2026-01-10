@@ -17,7 +17,7 @@ const VenueCard = ({ venue, onClick }) => {
             </div>
             <CardContent className="p-4">
                 <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-[#5C6657]">
+                    <h3 className="text-lg font-semibold text-[#393F36]">
                         {venue.venue_name}
                     </h3>
                     {venue.averageRating > 0 && (

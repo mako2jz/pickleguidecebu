@@ -13,7 +13,7 @@ const Home = () => {
         <div className="page-container">
             <Header />
             
-            <main className="main-content">
+            <main className="main-content" id="hero">
                 {/* Hero Section */}
                 <Hero onSubmitVenue={() => setShowSubmissionModal(true)} />
 

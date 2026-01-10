@@ -16,6 +16,7 @@ import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { toast } from 'sonner';
+import AnimatedContent from './AnimatedContent';
 
 const VenueModal = ({ venue, onClose }) => {
     const [reviews, setReviews] = useState([]);
@@ -84,13 +85,25 @@ const VenueModal = ({ venue, onClose }) => {
             onClick={handleBackdropClick}
         >
             <div className="min-h-screen px-4 py-8 flex items-center justify-center">
-                <div className="bg-background rounded-lg shadow-xl max-w-4xl w-full mx-auto relative border border-border">
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={onClose}
-                        className="absolute right-4 top-4 z-10 bg-background/90 hover:bg-secondary"
-                    >
+                <AnimatedContent
+                    distance={80}
+                    direction="vertical"
+                    reverse={false}
+                    duration={0.4}
+                    ease="power3.out"
+                    initialOpacity={0}
+                    animateOpacity
+                    scale={0.95}
+                    threshold={0}
+                    className="w-full max-w-4xl"
+                >
+                    <div className="bg-background rounded-lg shadow-xl w-full mx-auto relative border border-border">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={onClose}
+                            className="absolute right-4 top-4 z-10 bg-background/90 hover:bg-secondary"
+                        >
                         <X className="w-5 h-5" />
                     </Button>
 
@@ -341,6 +354,7 @@ const VenueModal = ({ venue, onClose }) => {
                         </Tabs>
                     </div>
                 </div>
+                </AnimatedContent>
             </div>
         </div>
     );
