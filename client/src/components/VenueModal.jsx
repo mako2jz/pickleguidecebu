@@ -15,6 +15,7 @@ import api from '../api/axios';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { toast } from 'sonner';
 
 const VenueModal = ({ venue, onClose }) => {
     const [reviews, setReviews] = useState([]);
@@ -58,6 +59,7 @@ const VenueModal = ({ venue, onClose }) => {
             if (data.success) {
                 setReviewForm({ reviewer_name: '', rating: 5, review_description: '' });
                 fetchReviews();
+                toast.success('Review submitted successfully!');
             }
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to submit review');
