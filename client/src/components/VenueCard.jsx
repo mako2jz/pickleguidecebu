@@ -3,6 +3,9 @@ import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 
 const VenueCard = ({ venue, onClick }) => {
+    const averageRating = parseFloat(venue.averageRating) || 0;
+    const reviewCount = parseInt(venue.reviewCount) || 0;
+
     return (
         <Card
             className="overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 border-border/50 bg-card"
@@ -20,11 +23,11 @@ const VenueCard = ({ venue, onClick }) => {
                     <h3 className="text-lg font-semibold text-[#393F36]">
                         {venue.venue_name}
                     </h3>
-                    {venue.averageRating > 0 && (
+                    {averageRating > 0 && (
                         <div className="flex items-center gap-1 text-[#D4AF37]">
                             <Star className="w-4 h-4 fill-current" />
                             <span className="text-sm font-medium">
-                                {venue.averageRating.toFixed(1)}
+                                {averageRating.toFixed(1)}
                             </span>
                         </div>
                     )}
@@ -47,10 +50,10 @@ const VenueCard = ({ venue, onClick }) => {
                         </span>
                     )}
                 </div>
-                {venue.reviewCount > 0 && (
+                {reviewCount > 0 && (
                     <div className="mt-2 text-xs text-foreground/60">
-                        {venue.reviewCount}{" "}
-                        {venue.reviewCount === 1 ? "review" : "reviews"}
+                        {reviewCount}{" "}
+                        {reviewCount === 1 ? "review" : "reviews"}
                     </div>
                 )}
             </CardContent>

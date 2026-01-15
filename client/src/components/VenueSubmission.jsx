@@ -1,5 +1,21 @@
 import { useState } from 'react';
+import {
+    MapPin,
+    Users,
+    DollarSign,
+    Phone,
+    Smartphone,
+    Facebook,
+    Instagram,
+    MessageCircle,
+    X,
+    CheckCircle,
+    Building2,
+} from "lucide-react";
 import api from '../api/axios';
+import { Button } from './ui/button';
+import { Separator } from './ui/separator';
+import AnimatedContent from './AnimatedContent';
 
 const VenueSubmission = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
@@ -68,154 +84,255 @@ const VenueSubmission = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-backdrop" onClick={handleBackdropClick}>
-            <div className="modal-content submission-modal">
-                <button className="modal-close" onClick={onClose}>×</button>
-                
-                <h2>Submit a Venue</h2>
-                <p className="submission-subtitle">
-                    Know a pickleball court in Cebu? Help the community by submitting it!
-                </p>
-
-                {success ? (
-                    <div className="submission-success">
-                        <span className="success-icon">✅</span>
-                        <h3>Thank You!</h3>
-                        <p>Your submission has been received and is pending admin approval.</p>
-                    </div>
-                ) : (
-                    <form className="submission-form" onSubmit={handleSubmit}>
-                        {error && <p className="error-message">{error}</p>}
-                        
-                        {/* Required Fields */}
-                        <div className="form-group">
-                            <label htmlFor="venue_name">Venue Name *</label>
-                            <input
-                                type="text"
-                                id="venue_name"
-                                name="venue_name"
-                                value={formData.venue_name}
-                                onChange={handleChange}
-                                placeholder="e.g., Cebu Sports Hub"
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="location">Location *</label>
-                            <input
-                                type="text"
-                                id="location"
-                                name="location"
-                                value={formData.location}
-                                onChange={handleChange}
-                                placeholder="e.g., IT Park, Apas, Cebu City"
-                                required
-                            />
-                        </div>
-
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="number_of_courts">Number of Courts *</label>
-                                <input
-                                    type="number"
-                                    id="number_of_courts"
-                                    name="number_of_courts"
-                                    value={formData.number_of_courts}
-                                    onChange={handleChange}
-                                    placeholder="e.g., 4"
-                                    min="1"
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="price">Price</label>
-                                <input
-                                    type="text"
-                                    id="price"
-                                    name="price"
-                                    value={formData.price}
-                                    onChange={handleChange}
-                                    placeholder="e.g., ₱300/hour per court"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Contact Information */}
-                        <h4 className="form-section-title">Contact Information (Optional)</h4>
-
-                        <div className="form-group">
-                            <label htmlFor="facebook_page">Facebook Page</label>
-                            <input
-                                type="url"
-                                id="facebook_page"
-                                name="facebook_page"
-                                value={formData.facebook_page}
-                                onChange={handleChange}
-                                placeholder="https://facebook.com/..."
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="instagram">Instagram</label>
-                            <input
-                                type="url"
-                                id="instagram"
-                                name="instagram"
-                                value={formData.instagram}
-                                onChange={handleChange}
-                                placeholder="https://instagram.com/..."
-                            />
-                        </div>
-
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="viber">Viber</label>
-                                <input
-                                    type="text"
-                                    id="viber"
-                                    name="viber"
-                                    value={formData.viber}
-                                    onChange={handleChange}
-                                    placeholder="e.g., 09171234567"
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="mobile_number">Mobile Number</label>
-                                <input
-                                    type="text"
-                                    id="mobile_number"
-                                    name="mobile_number"
-                                    value={formData.mobile_number}
-                                    onChange={handleChange}
-                                    placeholder="e.g., 09171234567"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="telephone_number">Telephone Number</label>
-                            <input
-                                type="text"
-                                id="telephone_number"
-                                name="telephone_number"
-                                value={formData.telephone_number}
-                                onChange={handleChange}
-                                placeholder="e.g., (032) 123-4567"
-                            />
-                        </div>
-
-                        <button 
-                            type="submit" 
-                            className="btn btn-primary btn-full"
-                            disabled={submitting}
+        <div 
+            className="fixed inset-0 bg-black/60 z-50 overflow-y-auto"
+            onClick={handleBackdropClick}
+        >
+            <div className="min-h-screen px-4 py-8 flex items-center justify-center">
+                <AnimatedContent
+                    distance={80}
+                    direction="vertical"
+                    reverse={false}
+                    duration={0.4}
+                    ease="power3.out"
+                    initialOpacity={0}
+                    animateOpacity
+                    scale={0.95}
+                    threshold={0}
+                    className="w-full max-w-2xl"
+                >
+                    <div className="bg-background rounded-lg shadow-xl w-full mx-auto relative border border-border">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={onClose}
+                            className="absolute right-4 top-4 z-10 bg-background/90 hover:bg-secondary"
                         >
-                            {submitting ? 'Submitting...' : 'Submit Venue'}
-                        </button>
-                    </form>
-                )}
+                            <X className="w-5 h-5" />
+                        </Button>
+
+                        <div className="p-6">
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="p-2 bg-primary/10 rounded-lg">
+                                    <Building2 className="w-6 h-6 text-primary" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-[#393F36]">
+                                    Submit a Venue
+                                </h2>
+                            </div>
+                            <p className="text-foreground/70 mb-6">
+                                Know a pickleball court in Cebu? Help the community by submitting it!
+                            </p>
+
+                            {success ? (
+                                <div className="text-center py-12">
+                                    <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                                        <CheckCircle className="w-10 h-10 text-green-600" />
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-[#393F36] mb-2">Thank You!</h3>
+                                    <p className="text-foreground/70">
+                                        Your submission has been received and is pending admin approval.
+                                    </p>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-4">
+                                    {error && (
+                                        <p className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
+                                            {error}
+                                        </p>
+                                    )}
+                                    
+                                    {/* Required Fields */}
+                                    <div className="space-y-4">
+                                        <h3 className="font-semibold text-lg text-[#5C6657] flex items-center gap-2">
+                                            <Building2 className="w-5 h-5" />
+                                            Venue Information
+                                        </h3>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                Venue Name *
+                                            </label>
+                                            <div className="relative">
+                                                <input
+                                                    type="text"
+                                                    name="venue_name"
+                                                    value={formData.venue_name}
+                                                    onChange={handleChange}
+                                                    placeholder="e.g., Cebu Sports Hub"
+                                                    required
+                                                    className="w-full px-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                Location *
+                                            </label>
+                                            <div className="relative">
+                                                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                <input
+                                                    type="text"
+                                                    name="location"
+                                                    value={formData.location}
+                                                    onChange={handleChange}
+                                                    placeholder="e.g., IT Park, Apas, Cebu City"
+                                                    required
+                                                    className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                    Number of Courts *
+                                                </label>
+                                                <div className="relative">
+                                                    <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                    <input
+                                                        type="number"
+                                                        name="number_of_courts"
+                                                        value={formData.number_of_courts}
+                                                        onChange={handleChange}
+                                                        placeholder="e.g., 4"
+                                                        min="1"
+                                                        required
+                                                        className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                    Price
+                                                </label>
+                                                <div className="relative">
+                                                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                    <input
+                                                        type="text"
+                                                        name="price"
+                                                        value={formData.price}
+                                                        onChange={handleChange}
+                                                        placeholder="e.g., ₱300/hour"
+                                                        className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <Separator className="my-6 bg-border" />
+
+                                    {/* Contact Information */}
+                                    <div className="space-y-4">
+                                        <h3 className="font-semibold text-lg text-[#5C6657] flex items-center gap-2">
+                                            <Phone className="w-5 h-5" />
+                                            Contact Information (Optional)
+                                        </h3>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                Facebook Page
+                                            </label>
+                                            <div className="relative">
+                                                <Facebook className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                <input
+                                                    type="url"
+                                                    name="facebook_page"
+                                                    value={formData.facebook_page}
+                                                    onChange={handleChange}
+                                                    placeholder="https://facebook.com/..."
+                                                    className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                Instagram
+                                            </label>
+                                            <div className="relative">
+                                                <Instagram className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                <input
+                                                    type="url"
+                                                    name="instagram"
+                                                    value={formData.instagram}
+                                                    onChange={handleChange}
+                                                    placeholder="https://instagram.com/..."
+                                                    className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                    Viber
+                                                </label>
+                                                <div className="relative">
+                                                    <MessageCircle className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                    <input
+                                                        type="text"
+                                                        name="viber"
+                                                        value={formData.viber}
+                                                        onChange={handleChange}
+                                                        placeholder="e.g., 09171234567"
+                                                        className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                    Mobile Number
+                                                </label>
+                                                <div className="relative">
+                                                    <Smartphone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                    <input
+                                                        type="text"
+                                                        name="mobile_number"
+                                                        value={formData.mobile_number}
+                                                        onChange={handleChange}
+                                                        placeholder="e.g., 09171234567"
+                                                        className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-[#5C6657] mb-1">
+                                                Telephone Number
+                                            </label>
+                                            <div className="relative">
+                                                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                                                <input
+                                                    type="text"
+                                                    name="telephone_number"
+                                                    value={formData.telephone_number}
+                                                    onChange={handleChange}
+                                                    placeholder="e.g., (032) 123-4567"
+                                                    className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-input-background text-[#5C6657] focus:outline-none focus:ring-2 focus:ring-ring"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <Button 
+                                        type="submit" 
+                                        disabled={submitting}
+                                        className="w-full mt-6"
+                                        variant="pickleballgreen"
+                                    >
+                                        {submitting ? 'Submitting...' : 'Submit Venue'}
+                                    </Button>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+                </AnimatedContent>
             </div>
         </div>
     );

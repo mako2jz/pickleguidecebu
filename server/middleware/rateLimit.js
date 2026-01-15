@@ -7,13 +7,30 @@ import rateLimit from 'express-rate-limit';
  * Different limiters for different use cases.
  */
 
-// General API limiter (for most routes)
+// General API limiter (for most routes) - more lenient for normal usage
 export const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // 100 requests per window
+    max: 500, // 500 requests per window (more reasonable for SPA)
     message: {
         success: false,
         message: 'Too many requests. Please try again later.'
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+    // Skip rate limiting for GET requests to public endpoints
+    skip: (req) => {
+        const publicGetRoutes = ['/api/courts', '/api/health'];
+        return req.method === 'GET' && publicGetRoutes.some(route => req.path.startsWith(route));
+    }
+});
+
+// Public read-only limiter (very lenient - just prevents extreme abuse)
+export const publicReadLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 240, // 240 requests per minute (4 per second average)
+    message: {
+        success: false,
+        message: 'Too many requests. Please try again shortly.'
     },
     standardHeaders: true,
     legacyHeaders: false
@@ -22,7 +39,7 @@ export const generalLimiter = rateLimit({
 // Strict limiter for auth routes (login, etc.)
 export const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // 5 login attempts per window
+    max: 10, // 10 login attempts per window (increased from 5)
     message: {
         success: false,
         message: 'Too many login attempts. Please try again after 15 minutes.'
