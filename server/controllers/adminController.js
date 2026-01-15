@@ -177,9 +177,7 @@ export const approveSubmission = async (req, res) => {
 
     const submission = submissions[0];
 
-    // 2. Insert into courts (using default picture)
-    const defaultPicture = '/defaults/court-placeholder.jpg';
-    
+    // 2. Insert into courts (venue_picture is NULL, frontend handles fallback)
     const insertQuery = `
       INSERT INTO courts (
         venue_picture, venue_name, location, number_of_courts, price, 
@@ -188,7 +186,7 @@ export const approveSubmission = async (req, res) => {
     `;
 
     const values = [
-      defaultPicture,
+      null, // Let frontend handle default image fallback
       submission.venue_name, 
       submission.location, 
       submission.number_of_courts, 
