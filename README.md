@@ -1,52 +1,64 @@
 # Pickle Guide Cebu 🏓
 
-A community-driven guide to pickleball court rentals in Cebu.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+
+A community-driven guide to pickleball court rentals in Cebu. This platform helps players find courts, compare prices, and share their experiences.
 
 ## Tech Stack
 
-This is a MERN stack application with MySQL instead of MongoDB:
-- **Frontend**: React + Vite
-- **Backend**: Node.js + Express
+This project uses the MERN stack with MySQL replacing MongoDB:
+
+### Client
+- **Framework**: React + Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **Animations**: GSAP
+- **Icons**: Lucide React
+- **State Management**: React Context API
+- **HTTP Client**: Axios
+
+### Server
+- **Runtime**: Node.js
+- **Framework**: Express.js
 - **Database**: MySQL
-- **State Management**: React Hooks
+- **Authentication**: JWT (JSON Web Tokens)
+- **Security**: bcrypt.js, cors, express-rate-limit
 
 ## Project Structure
 
 ```
 pickleguidecebu/
-├── client/                 # React frontend
-│   ├── public/            # Static files
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── assets/        # Images, styles, etc.
-│   │   ├── App.jsx        # Main App component
-│   │   ├── main.jsx       # Entry point
-│   │   ├── App.css        # App styles
-│   │   └── index.css      # Global styles
-│   ├── index.html         # HTML template
-│   ├── vite.config.js     # Vite configuration
-│   └── package.json       # Client dependencies
+├── client/                 # Frontend Application
+│   ├── public/             # Static files
+│   └── src/
+│       ├── api/            # API configuration (Axios)
+│       ├── components/     # Reusable UI components
+│       ├── context/        # React Context (Auth)
+│       ├── lib/            # Utility functions
+│       ├── pages/          # Application Routes/Pages
+│       └── App.jsx         # Main Component
 │
-├── server/                # Express backend
-│   ├── config/           # Configuration files
-│   │   └── db.js         # MySQL connection
-│   ├── controllers/      # Request handlers
-│   │   └── courtController.js
-│   ├── models/          # Database schemas
-│   │   └── schema.sql   # SQL schema
-│   ├── routes/          # API routes
-│   │   └── courtRoutes.js
-│   ├── server.js        # Server entry point
-│   ├── .env.example     # Environment variables template
-│   └── package.json     # Server dependencies
+├── server/                 # Backend API
+│   ├── config/             # Database configuration
+│   ├── controllers/        # Route logic handlers
+│   ├── database/           # SQL schemas
+│   ├── middleware/         # Auth, Rates, Roles
+│   ├── routes/             # API Endpoints
+│   └── server.js           # Server Entry point
 │
-└── package.json         # Root package.json for scripts
+└── package.json            # Root Scripts
 ```
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
-- MySQL (v5.7 or higher)
+- Node.js (v16+)
+- MySQL (v5.7 or v8.0)
 - npm or yarn
 
 ## Installation
@@ -61,10 +73,8 @@ cd pickleguidecebu
 ### 2. Install dependencies
 
 ```bash
-# Install root dependencies
+# Install root, server, and client dependencies
 npm install
-
-# Install server and client dependencies
 npm run install-all
 ```
 
@@ -74,91 +84,79 @@ npm run install-all
 # Log into MySQL
 mysql -u root -p
 
-# Create database and tables
-source server/models/schema.sql
+# Create database and tables using the schema
+source server/database/schema.sql
 ```
 
 ### 4. Configure environment variables
 
-```bash
-# Copy the example environment file
-cp server/.env.example server/.env
+Create a `.env` file in the `server/` directory:
 
-# Edit the .env file with your MySQL credentials
-# Example:
-# PORT=5000
-# DB_HOST=localhost
-# DB_USER=root
-# DB_PASSWORD=your_password
-# DB_NAME=pickleguidecebu
+```env
+PORT=5000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=pickleguidecebu
+CORS_ORIGIN=http://localhost:3000
+JWT_SECRET=your_jwt_secret_key
 ```
 
 ## Running the Application
 
 ### Development Mode
 
-Run both frontend and backend concurrently:
+Run both frontend and backend concurrently with a single command:
 
 ```bash
 npm run dev
 ```
 
-Or run them separately:
+Or run them in separate terminals:
 
 ```bash
-# Terminal 1 - Run backend server (port 5000)
+# Terminal 1 - Backend (Port 5000)
 npm run server
 
-# Terminal 2 - Run frontend dev server (port 3000)
+# Terminal 2 - Frontend (Port 3000)
 npm run client
 ```
 
-### Access the Application
+### Access Points
 
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:5000
 - **API Health Check**: http://localhost:5000/api/health
 
+## Key Features
+
+- **Court Browsing**: View all available courts with photos and details.
+- **Venue Submission**: Users can suggest new courts for the platform.
+- **Reviews**: Leave ratings and reviews for courts.
+- **Admin Dashboard**: Protected route for admins to manage submissions and reviews.
+- **Authentication**: Secure login/signup system with JWT and HttpOnly cookies.
+- **Security**: Rate limiting on API routes to prevent abuse.
+
 ## API Endpoints
 
-### Courts
+### Public Routes
+- `GET  /api/courts` - List all courts
+- `GET  /api/courts/:id` - Get court details
+- `POST /api/submissions` - Submit a new venue
+- `POST /api/reviews` - Add a review
+- `GET  /api/reviews/court/:courtId` - Get reviews for a court
 
-- `GET /api/courts` - Get all courts
-- `GET /api/courts/:id` - Get a specific court
-- `POST /api/courts` - Create a new court
+### Auth
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET  /api/auth/me` - Get current user profile
 
-### Example API Request
-
-```bash
-# Get all courts
-curl http://localhost:5000/api/courts
-
-# Create a new court
-curl -X POST http://localhost:5000/api/courts \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Example Court",
-    "location": "Cebu City",
-    "description": "A great place to play",
-    "price": 450.00
-  }'
-```
-
-## Building for Production
-
-```bash
-# Build the frontend
-npm run build
-
-# The built files will be in client/dist/
-```
-
-## Features
-
-- 🏓 Browse pickleball courts in Cebu
-- 📍 View court locations and details
-- 💰 Compare prices
-- ⭐ Court ratings and reviews (coming soon)
+### Admin (Protected)
+- `GET  /api/admin/dashboard` - Dashboard stats
+- `GET  /api/admin/submissions` - View pending submissions
+- `PUT  /api/admin/submissions/:id/approve` - Approve a court
+- `DELETE /api/admin/submissions/:id` - Reject submission
 
 ## Contributing
 
